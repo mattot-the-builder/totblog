@@ -21,15 +21,15 @@ func CreatePost(c *gin.Context) {
 	c.JSON(http.StatusCreated, post)
 }
 
+func GetAllPosts(c *gin.Context) {
+	posts := database.GetAllPosts()
+	c.JSON(http.StatusOK, posts)
+}
+
 func GetPostBySlug(c *gin.Context) {
 	postSlug := c.Param("slug")
 	post := database.GetPostBySlug(postSlug)
 	c.JSON(http.StatusOK, post)
-}
-
-func GetAllPosts(c *gin.Context) {
-	posts := database.GetAllPosts()
-	c.JSON(http.StatusOK, posts)
 }
 
 func UpdatePost(c *gin.Context) {

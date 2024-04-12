@@ -20,10 +20,10 @@ func GetUserByUsername(username string) model.User {
 	return user
 }
 
-func UpdateUser(user *model.User) {
-	DB.Model(user).Updates(user)
+func UpdateUser(username string, user *model.User) {
+	DB.Model(&model.User{}).Where("username = ?", username).Updates(user)
 }
 
-func DeleteUser(user *model.User) {
-	DB.Delete(user, user.ID)
+func DeleteUser(username string) {
+	DB.Where("username = ?", username).Delete(&model.User{})
 }

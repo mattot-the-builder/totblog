@@ -10,6 +10,13 @@ func SetupRoute(r *gin.Engine) {
 	r.POST("/login", Login)
 	r.POST("/register", RegisterUser)
 
+	// user
+	r.GET("/users", GetAllUsers)
+	r.GET("/users/:username", GetUserByUsername)
+	r.POST("/users", CreateUser)
+	r.PUT("/users/:username", UpdateUser)
+	r.DELETE("/users/:username", DeleteUser)
+
 	// post
 	r.GET("/posts", GetAllPosts)
 	r.GET("/posts/:slug", GetPostBySlug)
