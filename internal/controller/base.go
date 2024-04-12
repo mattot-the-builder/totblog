@@ -4,7 +4,8 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/mysql"
+	"github.com/mattot-the-builder/totblog/internal/database"
+	"github.com/mattot-the-builder/totblog/internal/model"
 	"gorm.io/gorm"
 )
 
@@ -17,15 +18,8 @@ func (s *Server) Initialize() {
 
 	// setup database
 
-	dsn := "mattot:password@tcp(127.0.0.1:3306)/totblog?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-
-	s.DB = db
-
-	log.Println("connected to database")
+	s.DB = database.Connect()
+	log.Println("database setup complete")
 
 	// setup router
 
@@ -40,4 +34,9 @@ func (s *Server) Initialize() {
 
 func (s *Server) Run(addr string) {
 	s.Router.Run(addr)
+}
+
+func (s *Server) Migrate() {
+	s.DB.AutoMigrate(&model.User{})
+	s.DB.AutoMigrate(&model.Post{})
 }
